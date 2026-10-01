@@ -18,7 +18,7 @@ export default defineConfig(async ({ mode }) => {
   // Canonical/SEO base URL: explicit SITE_URL wins, else Netlify's `URL` build
   // env (the site's public origin). Available on both client and server builds.
   envDefine["import.meta.env.SITE_URL"] = JSON.stringify(
-    process.env["SITE_URL"] || process.env["URL"] || "",
+    process.env["SITE_URL"] || process.env["CF_PAGES_URL"] || process.env["URL"] || "",
   );
 
   return {
