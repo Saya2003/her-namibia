@@ -1,37 +1,35 @@
-export const KEY_SECTORS = [
-  "Land & Natural Resources",
-  "Oil & Gas",
-  "Tourism & Hospitality",
-  "Energy",
+/** Story themes used across Her Namibia: articles, news, resources, and the podcast. */
+export const STORY_CATEGORIES = [
+  "Business",
+  "Leadership",
   "Health",
-  "Mining",
-  "Defence",
-  "International Development",
+  "Motherhood",
+  "Culture",
+  "Young Women",
   "Other",
 ] as const;
 
-export type SectorType = (typeof KEY_SECTORS)[number];
+export type StoryCategory = (typeof STORY_CATEGORIES)[number];
+
+/** Stored in the existing `sector` column. */
+export const KEY_SECTORS = STORY_CATEGORIES;
+
+export type SectorType = StoryCategory;
 
 export const RESOURCE_TYPES = [
-  "Research Report",
-  "Policy Brief",
-  "Toolkit",
-  "Working Paper",
-  "Dataset",
-  "Case Study",
+  "Feature",
+  "Interview",
+  "Guide",
+  "Report",
+  "Opinion",
   "Other",
 ] as const;
 
 export type ResourceType = (typeof RESOURCE_TYPES)[number];
 
-export const NEWS_CATEGORIES = [
-  "Corporate Announcement",
-  "Fieldwork & Research",
-  "Conference & Events",
-  "Strategic Partnership",
-  "Sector Insights",
-  "Press Release",
-  "Other",
-] as const;
+export const NEWS_CATEGORIES = STORY_CATEGORIES;
 
-export type NewsCategory = (typeof NEWS_CATEGORIES)[number];
+export type NewsCategory = StoryCategory;
+
+/** Episodes are stored in `news` with this category so they stay separate from news posts. */
+export const PODCAST_CATEGORY = "Podcast";

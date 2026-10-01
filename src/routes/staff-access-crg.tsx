@@ -12,9 +12,9 @@ export const Route = createFileRoute("/staff-access-crg")({
   ssr: false,
   head: () => ({
     meta: [
-      { title: "Staff Access" },
+      { title: "Admin Access | Her Namibia" },
       { name: "robots", content: "noindex, nofollow" },
-      { name: "description", content: "Restricted staff area." },
+      { name: "description", content: "Her Namibia admin portal." },
     ],
   }),
   component: StaffAccess,
@@ -40,7 +40,7 @@ function StaffAccess() {
   useEffect(() => {
     setLockedUntil(readLock().until);
     void supabase.auth.getUser().then(({ data }) => {
-      if (data.user) void navigate({ to: "/crg-admin" });
+      if (data.user) void navigate({ to: "/HerNamibia-admin" });
     });
   }, [navigate]);
 
@@ -77,7 +77,7 @@ function StaffAccess() {
     }
 
     localStorage.removeItem(LOCK_KEY);
-    void navigate({ to: "/crg-admin" });
+    void navigate({ to: "/HerNamibia-admin" });
   };
 
   const locked = lockedUntil > Date.now();
@@ -86,11 +86,11 @@ function StaffAccess() {
     <div className="flex min-h-screen items-center justify-center bg-surface px-5 py-16">
       <div className="animate-scale-in w-full max-w-sm rounded-2xl border-2 border-primary bg-card p-8 shadow-lift">
         <div className="flex justify-center">
-          <img src="/crg-logo.png" alt="CRG logo" className="h-12 w-auto object-contain" />
+          <img src="/her-namibia-logo.png" alt="Her Namibia logo" className="h-12 w-auto object-contain" />
         </div>
-        <h1 className="mt-5 text-center text-lg font-bold">Staff Access</h1>
+        <h1 className="mt-5 text-center text-lg font-bold">Admin Access</h1>
         <p className="mt-1 text-center text-sm text-muted-foreground">
-          Authorised personnel only.
+          Her Namibia admin portal.
         </p>
 
         <form onSubmit={onSubmit} className="mt-7 space-y-4">

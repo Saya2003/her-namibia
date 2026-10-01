@@ -9,8 +9,8 @@ import { Reveal } from "@/components/site/Reveal";
 import { Badge } from "@/components/ui/badge";
 import { KEY_SECTORS, RESOURCE_TYPES } from "@/lib/sectors";
 
-const TITLE = "Resources & Publications | CRG Research & Consulting";
-const DESCRIPTION = "Explore evidence-based research reports, policy briefs, datasets, and toolkits.";
+const TITLE = "Resources & Insights | Her Namibia";
+const DESCRIPTION = "Explore guides, toolkits, and resources for women's empowerment, leadership, and personal growth.";
 
 export const Route = createFileRoute("/resources")({
   head: () => ({
@@ -105,8 +105,12 @@ function ResourcesPage() {
           <div className="mx-auto max-w-7xl px-5 text-center lg:px-8">
             <Reveal className="mx-auto max-w-3xl">
               <h1 className="text-3xl font-extrabold text-primary-foreground sm:text-4xl lg:text-5xl">
-                Resources & Publications
+                Resources & Insights
               </h1>
+              <p className="mt-4 text-lg text-primary-foreground/90">
+                Explore guides, toolkits, and resources to support your journey in 
+                leadership, business, motherhood, and personal growth.
+              </p>
             </Reveal>
           </div>
         </section>
@@ -120,7 +124,7 @@ function ResourcesPage() {
                 <Search className="absolute left-3.5 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
                 <input
                   type="text"
-                  placeholder="Search resources by title, author, or keyword..."
+                  placeholder="Search resources by title, topic, or keyword..."
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
                   className="w-full rounded-full border border-input bg-card py-2.5 pl-10 pr-10 text-sm text-foreground placeholder:text-muted-foreground focus:border-accent focus:outline-none focus:ring-2 focus:ring-accent/20 transition-all shadow-sm"
@@ -157,7 +161,7 @@ function ResourcesPage() {
               <div className="flex items-center gap-2 mb-3">
                 <Filter className="size-3.5 text-accent" />
                 <span className="text-xs font-bold uppercase tracking-wider text-muted-foreground">
-                  Filter by Sector:
+                  Filter by Category:
                 </span>
               </div>
               <div className="flex flex-wrap gap-2">
@@ -170,7 +174,7 @@ function ResourcesPage() {
                       : "border border-border bg-card text-muted-foreground hover:border-accent hover:text-foreground"
                   }`}
                 >
-                  All Sectors
+                  All Categories
                 </button>
                 {KEY_SECTORS.map((sec) => (
                   <button
@@ -242,7 +246,7 @@ function ResourcesPage() {
                 <h3 className="text-lg font-bold text-foreground">No resources found</h3>
                 <p className="mt-1 text-sm text-muted-foreground">
                   {isFiltered
-                    ? "Try adjusting your search keywords, sector, or type filters."
+                    ? "Try adjusting your search keywords, category, or type filters."
                     : "No published resources are available at the moment."}
                 </p>
                 {isFiltered && (

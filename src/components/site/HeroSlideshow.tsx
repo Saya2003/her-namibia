@@ -4,46 +4,25 @@ import { cn } from "@/lib/utils";
 
 const SLIDES = [
   {
-    url: "/images/image-8.jpeg",
-    alt: "CRG delegates at the International Federation of Surveyors sustainable development goals exhibition",
-    kicker: "GLOBAL ENGAGEMENT",
-    title: "Transformative Research & Strategic Consulting",
-    text: "Evidence-based solutions across global industries, unlocking sustainable growth and measurable impact.",
+    url: "/images/priscilla-1.jpeg",
+    alt: "Pricilla Mukokobi - Founder of Her Namibia",
+    kicker: "HER STORY",
+    title: "Every Woman Has a Story Worth Hearing",
+    text: "Celebrating the voices and experiences of women across Namibia through meaningful conversations and inspiring stories.",
   },
   {
-    url: "/images/image-5.jpeg",
-    alt: "CRG team meeting with UN-Habitat representatives",
-    kicker: "PARTNERSHIPS",
-    title: "Working With Global Development Partners",
-    text: "Collaborating with UN agencies, governments and institutions to shape inclusive urban and land policy.",
+    url: "/images/priscilla-2.jpeg",
+    alt: "Pricilla Mukokobi at Women's Leadership Event",
+    kicker: "HER VOICE",
+    title: "Amplifying Women's Voices Across Namibia",
+    text: "From business leaders to mothers, artists to activists - we share the journeys that shape our nation.",
   },
   {
-    url: "/images/image-4.jpeg",
-    alt: "CRG field research team with community stakeholders",
-    kicker: "FIELDWORK",
-    title: "Grounded in Communities We Serve",
-    text: "Primary data collection and stakeholder engagement across Namibia, Kenya, Nigeria and beyond.",
-  },
-  {
-    url: "/images/image-6.jpeg",
-    alt: "CRG research and consulting team",
-    kicker: "",
-    title: "",
-    text: "",
-  },
-  {
-    url: "/images/image-9.jpeg",
-    alt: "CRG research and consulting",
-    kicker: "INNOVATION",
-    title: "Data-Driven Solutions for Complex Challenges",
-    text: "Leveraging advanced analytics and research methodologies to inform policy and drive sustainable development.",
-  },
-  {
-    url: "/images/image-10.jpeg",
-    alt: "CRG research and consulting",
-    kicker: "IMPACT",
-    title: "Creating Lasting Change Across Africa",
-    text: "Building capacity, strengthening institutions, and empowering communities through evidence-based interventions.",
+    url: "/images/priscilla-1.jpeg",
+    alt: "Her Namibia Platform",
+    kicker: "HER IMPACT",
+    title: "Stories That Inspire Future Generations",
+    text: "Documenting the resilience, achievements, and lessons of remarkable women to inspire positive change.",
   },
 ];
 
@@ -96,7 +75,7 @@ export function HeroSlideshow() {
     <section
       id="home"
       aria-roledescription="carousel"
-      aria-label="CRG Research & Consulting highlights"
+      aria-label="Her Namibia highlights"
       className="relative isolate min-h-[100svh] w-full overflow-hidden select-none"
       onTouchStart={(e) => {
         touchStartX.current = e.touches[0]?.clientX ?? null;
@@ -177,16 +156,16 @@ export function HeroSlideshow() {
             style={{ animationDelay: "420ms" }}
           >
             <a
-              href="#services"
+              href="#stories"
               className="rounded-full bg-accent-gradient px-6 py-3 text-sm font-semibold text-accent-foreground shadow-lift transition-transform duration-300 hover:-translate-y-0.5 sm:px-7"
             >
-              Our Services
+              Our Stories
             </a>
             <a
               href="#about"
               className="rounded-full border-2 border-primary-foreground/70 px-6 py-3 text-sm font-semibold text-primary-foreground transition-colors duration-300 hover:bg-primary-foreground hover:text-primary sm:px-7"
             >
-              Our History
+              About Her Namibia
             </a>
           </div>
         </div>

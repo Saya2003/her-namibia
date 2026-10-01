@@ -5,8 +5,8 @@
 @custom-variant dark (&:is(.dark *));
 
 /*
- * CRG Research & Consulting design system.
- * Brand: deep corporate blue (#0A3D62) + cyan accent (#00A8E8).
+ * Her Namibia design system.
+ * Brand: Forest Green (#0F2B23) + Warm Gold (#C89A3C) + Terracotta Clay (#B45A3C).
  * All colors are oklch semantic tokens — never hardcode colors in components.
  */
 
@@ -61,6 +61,8 @@
   --animate-scale-in: scale-in 0.4s cubic-bezier(0.22, 1, 0.36, 1) both;
   --animate-slow-zoom: slow-zoom 8s ease-out both;
   --animate-float: float 6s ease-in-out infinite;
+  --animate-float-delayed: float 7.5s ease-in-out 0.6s infinite;
+  --animate-spin-slow: spin-slow 36s linear infinite;
   --animate-bar: bar 8s linear forwards;
 }
 
@@ -109,6 +111,11 @@
     transform: translateY(-10px);
   }
 }
+@keyframes spin-slow {
+  to {
+    transform: rotate(360deg);
+  }
+}
 @keyframes bar {
   from {
     transform: scaleX(0);
@@ -121,26 +128,28 @@
 :root {
   --radius: 0.5rem;
 
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.32 0.033 251);
+  /* Ivory Cream background */
+  --background: oklch(0.97 0.01 75);
+  --foreground: oklch(0.25 0.02 160);
   --card: oklch(1 0 0);
-  --card-foreground: oklch(0.32 0.033 251);
+  --card-foreground: oklch(0.25 0.02 160);
   --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.32 0.033 251);
+  --popover-foreground: oklch(0.25 0.02 160);
 
-  /* Deep corporate blue #0A3D62 */
-  --primary: oklch(0.354 0.075 248);
-  --primary-foreground: oklch(0.99 0.005 240);
+  /* Forest Green #0F2B23 */
+  --primary: oklch(0.2 0.05 160);
+  --primary-foreground: oklch(0.97 0.01 75);
 
-  --secondary: oklch(0.966 0.008 240);
-  --secondary-foreground: oklch(0.354 0.075 248);
+  /* Light version of forest green for secondary */
+  --secondary: oklch(0.94 0.01 160);
+  --secondary-foreground: oklch(0.2 0.05 160);
 
-  --muted: oklch(0.966 0.008 240);
-  --muted-foreground: oklch(0.53 0.028 249);
+  --muted: oklch(0.94 0.01 160);
+  --muted-foreground: oklch(0.45 0.02 160);
 
-  /* Cyan #00A8E8 */
-  --accent: oklch(0.674 0.146 231);
-  --accent-foreground: oklch(1 0 0);
+  /* Warm Gold #C89A3C */
+  --accent: oklch(0.68 0.12 65);
+  --accent-foreground: oklch(0.2 0.05 160);
 
   --destructive: oklch(0.577 0.245 27.325);
   --destructive-foreground: oklch(0.99 0 0);
@@ -149,60 +158,60 @@
   --warning: oklch(0.75 0.15 70);
   --warning-foreground: oklch(0.25 0.04 70);
 
-  --border: oklch(0.922 0.011 244);
-  --input: oklch(0.922 0.011 244);
-  --ring: oklch(0.674 0.146 231);
+  --border: oklch(0.88 0.01 160);
+  --input: oklch(0.88 0.01 160);
+  --ring: oklch(0.68 0.12 65);
 
-  --chart-1: oklch(0.674 0.146 231);
-  --chart-2: oklch(0.354 0.075 248);
+  --chart-1: oklch(0.68 0.12 65);
+  --chart-2: oklch(0.2 0.05 160);
   --chart-3: oklch(0.62 0.14 155);
-  --chart-4: oklch(0.75 0.15 70);
+  --chart-4: oklch(0.58 0.15 35);
   --chart-5: oklch(0.6 0.18 300);
 
-  --sidebar: oklch(0.354 0.075 248);
-  --sidebar-foreground: oklch(0.99 0.005 240);
-  --sidebar-primary: oklch(0.674 0.146 231);
-  --sidebar-primary-foreground: oklch(1 0 0);
-  --sidebar-accent: oklch(0.4 0.07 248);
-  --sidebar-accent-foreground: oklch(0.99 0.005 240);
-  --sidebar-border: oklch(0.44 0.06 248);
-  --sidebar-ring: oklch(0.674 0.146 231);
+  --sidebar: oklch(0.2 0.05 160);
+  --sidebar-foreground: oklch(0.97 0.01 75);
+  --sidebar-primary: oklch(0.68 0.12 65);
+  --sidebar-primary-foreground: oklch(0.2 0.05 160);
+  --sidebar-accent: oklch(0.3 0.04 160);
+  --sidebar-accent-foreground: oklch(0.97 0.01 75);
+  --sidebar-border: oklch(0.35 0.03 160);
+  --sidebar-ring: oklch(0.68 0.12 65);
 
-  --surface-muted: oklch(0.972 0.008 235);
+  --surface-muted: oklch(0.95 0.01 75);
   --gradient-hero: linear-gradient(
     120deg,
-    oklch(0.28 0.07 250 / 0.92) 0%,
-    oklch(0.354 0.075 248 / 0.78) 45%,
-    oklch(0.674 0.146 231 / 0.45) 100%
+    oklch(0.15 0.06 160 / 0.95) 0%,
+    oklch(0.2 0.05 160 / 0.85) 45%,
+    oklch(0.68 0.12 65 / 0.45) 100%
   );
   --gradient-accent: linear-gradient(
     100deg,
-    oklch(0.674 0.146 231) 0%,
-    oklch(0.55 0.13 240) 100%
+    oklch(0.68 0.12 65) 0%,
+    oklch(0.58 0.15 35) 100%
   );
-  --shadow-card: 0 10px 30px -12px oklch(0.354 0.075 248 / 0.25);
-  --shadow-lift: 0 22px 48px -18px oklch(0.354 0.075 248 / 0.4);
+  --shadow-card: 0 10px 30px -12px oklch(0.2 0.05 160 / 0.25);
+  --shadow-lift: 0 22px 48px -18px oklch(0.2 0.05 160 / 0.4);
 }
 
 .dark {
-  --background: oklch(0.2 0.03 250);
-  --foreground: oklch(0.97 0.005 240);
-  --card: oklch(0.25 0.035 250);
-  --card-foreground: oklch(0.97 0.005 240);
-  --popover: oklch(0.25 0.035 250);
-  --popover-foreground: oklch(0.97 0.005 240);
-  --primary: oklch(0.674 0.146 231);
-  --primary-foreground: oklch(0.15 0.03 250);
-  --secondary: oklch(0.3 0.04 250);
-  --secondary-foreground: oklch(0.97 0.005 240);
-  --muted: oklch(0.3 0.04 250);
-  --muted-foreground: oklch(0.75 0.02 244);
-  --accent: oklch(0.674 0.146 231);
-  --accent-foreground: oklch(0.15 0.03 250);
+  --background: oklch(0.12 0.04 160);
+  --foreground: oklch(0.97 0.01 75);
+  --card: oklch(0.18 0.03 160);
+  --card-foreground: oklch(0.97 0.01 75);
+  --popover: oklch(0.18 0.03 160);
+  --popover-foreground: oklch(0.97 0.01 75);
+  --primary: oklch(0.68 0.12 65);
+  --primary-foreground: oklch(0.12 0.04 160);
+  --secondary: oklch(0.22 0.03 160);
+  --secondary-foreground: oklch(0.97 0.01 75);
+  --muted: oklch(0.22 0.03 160);
+  --muted-foreground: oklch(0.75 0.02 160);
+  --accent: oklch(0.68 0.12 65);
+  --accent-foreground: oklch(0.12 0.04 160);
   --border: oklch(1 0 0 / 12%);
   --input: oklch(1 0 0 / 16%);
-  --ring: oklch(0.674 0.146 231);
-  --surface-muted: oklch(0.25 0.035 250);
+  --ring: oklch(0.68 0.12 65);
+  --surface-muted: oklch(0.18 0.03 160);
 }
 
 @layer base {
@@ -306,5 +315,134 @@
     animation-iteration-count: 1 !important;
     transition-duration: 0.001ms !important;
     scroll-behavior: auto !important;
+  }
+}
+/* Her Namibia Hero Section Enhancements */
+@utility hero-gradient {
+  background: linear-gradient(135deg, 
+    oklch(0.97 0.01 75) 0%,
+    oklch(0.95 0.01 75) 50%,
+    oklch(0.92 0.02 75) 100%);
+}
+
+@keyframes pill-pop {
+  0% {
+    transform: translateY(0) rotate(0deg) scale(1);
+  }
+  35% {
+    transform: translateY(-8px) rotate(var(--pill-tilt)) scale(1.08);
+  }
+  65% {
+    transform: translateY(-2px) rotate(calc(var(--pill-tilt) * -0.45)) scale(1.02);
+  }
+  100% {
+    transform: translateY(-5px) rotate(calc(var(--pill-tilt) * 0.55)) scale(1.05);
+  }
+}
+
+.story-pill {
+  --pill-tilt: -6deg;
+  position: relative;
+  cursor: pointer;
+  transition:
+    background-color 0.35s ease,
+    color 0.35s ease,
+    border-color 0.35s ease,
+    box-shadow 0.35s ease;
+}
+
+.story-pill::before,
+.story-pill::after {
+  content: "";
+  position: absolute;
+  border-radius: 999px;
+  opacity: 0;
+  pointer-events: none;
+  transition:
+    opacity 0.3s ease,
+    transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.story-pill::before {
+  top: -5px;
+  right: 12px;
+  width: 7px;
+  height: 7px;
+  background: var(--pill-spark);
+  transform: scale(0);
+}
+
+.story-pill::after {
+  bottom: -4px;
+  left: 14px;
+  width: 5px;
+  height: 5px;
+  background: var(--pill-spark-2);
+  transform: scale(0);
+}
+
+.story-pill:hover {
+  animation: pill-pop 0.55s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  border-color: transparent;
+  box-shadow: 0 10px 22px var(--pill-glow);
+}
+
+.story-pill-gold:hover {
+  background-color: oklch(0.78 0.14 75);
+  color: oklch(0.22 0.05 160);
+}
+
+.story-pill-green:hover {
+  background-color: oklch(0.45 0.1 155);
+  color: oklch(0.98 0.01 75);
+}
+
+.story-pill-coral:hover {
+  background-color: oklch(0.62 0.16 35);
+  color: oklch(0.99 0.01 75);
+}
+
+.story-pill:hover::before,
+.story-pill:hover::after {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.story-pill-gold {
+  --pill-tilt: -7deg;
+  --pill-bg: oklch(0.78 0.14 75);
+  --pill-ink: oklch(0.22 0.05 160);
+  --pill-glow: oklch(0.78 0.14 75 / 0.45);
+  --pill-spark: oklch(0.62 0.16 40);
+  --pill-spark-2: oklch(0.55 0.12 155);
+}
+
+.story-pill-green {
+  --pill-tilt: 6deg;
+  --pill-bg: oklch(0.45 0.1 155);
+  --pill-ink: oklch(0.98 0.01 75);
+  --pill-glow: oklch(0.45 0.1 155 / 0.4);
+  --pill-spark: oklch(0.78 0.14 75);
+  --pill-spark-2: oklch(0.7 0.16 35);
+}
+
+.story-pill-coral {
+  --pill-tilt: -5deg;
+  --pill-bg: oklch(0.62 0.16 35);
+  --pill-ink: oklch(0.99 0.01 75);
+  --pill-glow: oklch(0.62 0.16 35 / 0.45);
+  --pill-spark: oklch(0.78 0.14 85);
+  --pill-spark-2: oklch(0.5 0.12 160);
+}
+
+/* Enhanced card hover effects for Her Namibia */
+@utility hover-scale {
+  transition: 
+    transform 0.3s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+
+  &:hover {
+    transform: translateY(-8px) scale(1.02);
+    box-shadow: var(--shadow-lift);
   }
 }

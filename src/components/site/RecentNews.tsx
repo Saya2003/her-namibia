@@ -27,10 +27,12 @@ async function fetchPublishedNews(): Promise<NewsArticle[]> {
     .order("news_date", { ascending: false });
 
   if (error) throw error;
-  return (data ?? []).map((row) => ({
-    ...row,
-    image_urls: Array.isArray(row.image_urls) ? (row.image_urls as string[]) : [],
-  })) as NewsArticle[];
+  return (data ?? [])
+    .map((row) => ({
+      ...row,
+      image_urls: Array.isArray(row.image_urls) ? (row.image_urls as string[]) : [],
+    }))
+    .filter((row) => row.category !== "Podcast") as NewsArticle[];
 }
 
 export function RecentNews() {
@@ -60,7 +62,7 @@ export function RecentNews() {
           <Reveal className="mt-12 rounded-xl border-2 border-dashed border-primary bg-card p-12 text-center">
             <Newspaper className="mx-auto size-10 text-muted-foreground/50 mb-3" />
             <p className="text-muted-foreground">
-              Corporate announcements, events, and news coverage will be published here soon.
+              News and updates will be published here soon.
             </p>
           </Reveal>
         ) : (

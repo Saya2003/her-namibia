@@ -10,9 +10,9 @@ import { ProjectCard } from "@/components/site/ProjectCard";
 import { WorkUpdate } from "@/components/site/RecentWork";
 import { KEY_SECTORS } from "@/lib/sectors";
 
-const TITLE = "Projects & Work Updates | CRG Research & Consulting";
+const TITLE = "Articles | Her Namibia";
 const DESCRIPTION =
-  "Browse our evidence-based research assignments, sector evaluations, and strategic advisory updates across Africa.";
+  "Read articles and reported stories about remarkable women from across Namibia.";
 
 export const Route = createFileRoute("/projects")({
   head: () => ({
@@ -87,8 +87,11 @@ function ProjectsPage() {
           <div className="mx-auto max-w-7xl px-5 text-center lg:px-8">
             <Reveal className="mx-auto max-w-3xl">
               <h1 className="text-3xl font-extrabold text-primary-foreground sm:text-4xl lg:text-5xl">
-                Projects & Work Updates
+                Articles
               </h1>
+              <p className="mt-4 text-lg text-primary-foreground/90">
+                Read articles and reported stories about remarkable women from across Namibia.
+              </p>
             </Reveal>
           </div>
         </section>
@@ -104,7 +107,7 @@ function ProjectsPage() {
                   type="text"
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
-                  placeholder="Search projects by title, keyword, or sector..."
+                  placeholder="Search articles by title, keyword, or category..."
                   className="w-full rounded-full border border-input bg-card pl-10 pr-10 py-2.5 text-sm outline-none transition-shadow focus:ring-2 focus:ring-ring"
                 />
                 {searchTerm && (
@@ -123,7 +126,7 @@ function ProjectsPage() {
               <div className="flex items-center gap-3 text-xs font-medium text-muted-foreground">
                 <span className="flex items-center gap-1.5 font-bold text-foreground">
                   <FolderKanban className="size-4 text-accent" />
-                  {filteredProjects.length} {filteredProjects.length === 1 ? "Project" : "Projects"} Found
+                  {filteredProjects.length} {filteredProjects.length === 1 ? "Article" : "Articles"} Found
                 </span>
                 {(selectedSector !== "ALL" || searchTerm) && (
                   <button
@@ -142,7 +145,7 @@ function ProjectsPage() {
               <div className="flex items-center gap-2 mb-3">
                 <Filter className="size-3.5 text-accent" />
                 <span className="text-xs font-bold uppercase tracking-wider text-muted-foreground">
-                  Filter by Sector
+                  Filter by Category
                 </span>
               </div>
               <div className="flex flex-wrap items-center gap-2">
@@ -155,7 +158,7 @@ function ProjectsPage() {
                       : "border border-border bg-card text-muted-foreground hover:border-accent hover:text-foreground"
                   }`}
                 >
-                  All Sectors
+                  All Categories
                 </button>
                 {KEY_SECTORS.map((sector) => (
                   <button
@@ -190,7 +193,7 @@ function ProjectsPage() {
                 <FolderKanban className="mx-auto size-12 text-muted-foreground/60" />
                 <h3 className="mt-4 text-lg font-bold text-foreground">No projects found</h3>
                 <p className="mt-2 text-sm text-muted-foreground">
-                  No work updates match your current search criteria or sector filter.
+                  No articles match your current search or category.
                 </p>
                 <button
                   type="button"

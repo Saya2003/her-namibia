@@ -3,22 +3,22 @@ import { useLocation } from "@tanstack/react-router";
 import { Menu, X, ChevronDown } from "lucide-react";
 import { cn } from "@/lib/utils";
 
-const LOGO_URL = "/crg-logo.png";
+const LOGO_URL = "/her-namibia-logo.png";
 
 const NAV_ITEMS = [
   { label: "Home", href: "/" },
-  { label: "About Us", href: "/#about" },
-  { label: "Services", href: "/#services" },
-  { label: "Sectors", href: "/#sectors" },
+  { label: "About Her Namibia", href: "/#about" },
+  { label: "Our Stories", href: "/#stories" },
+  { label: "Woman of the Month", href: "/#woman-of-month" },
   {
-    label: "Portfolio",
+    label: "Featured",
     children: [
       { label: "News", href: "/news" },
-      { label: "Projects", href: "/projects" },
+      { label: "Articles", href: "/projects" },
       { label: "Resources", href: "/resources" },
+      { label: "Podcast", href: "/podcast" },
     ],
   },
-  { label: "Partners", href: "/#partners" },
 ];
 
 export function Navbar() {
@@ -53,10 +53,10 @@ export function Navbar() {
       )}
     >
       <div className="mx-auto grid max-w-7xl grid-cols-[minmax(0,1fr)_auto] items-center gap-4 px-5 py-3 lg:px-8">
-        <a href="/#home" className="flex min-w-0 items-center transition-opacity hover:opacity-80">
+        <a href="/" className="flex min-w-0 items-center transition-opacity hover:opacity-80">
           <img
             src={LOGO_URL}
-            alt="CRG Research & Consulting logo"
+            alt="Her Namibia logo"
             className={cn(
               "w-auto object-contain transition-all duration-500 drop-shadow-lg",
               isTransparent ? "h-12" : "h-10 sm:h-11",
@@ -75,7 +75,7 @@ export function Navbar() {
                     className={cn(
                       "nav-link text-[12px] xl:text-[13px] whitespace-nowrap font-semibold transition-all duration-300",
                       isTransparent
-                        ? "text-primary-foreground hover:bg-white/15 hover:text-white"
+                        ? "text-primary hover:bg-primary/10 hover:text-primary"
                         : "text-primary hover:bg-secondary hover:text-accent",
                       "group-hover:bg-secondary group-hover:text-accent",
                     )}
@@ -117,7 +117,7 @@ export function Navbar() {
                 className={cn(
                   "nav-link text-[12px] xl:text-[13px] whitespace-nowrap font-semibold transition-all duration-300",
                   isTransparent
-                    ? "text-primary-foreground hover:bg-white/15 hover:text-white"
+                    ? "text-primary hover:bg-primary/10 hover:text-primary"
                     : "text-primary hover:bg-secondary hover:text-accent",
                 )}
               >
@@ -126,10 +126,10 @@ export function Navbar() {
             );
           })}
           <a
-            href="/#contact"
+            href="mailto:priscillamukokobi@gmail.com"
             className="ml-2 rounded-full bg-accent-gradient px-5 py-2.5 text-[13px] font-semibold text-accent-foreground shadow-card transition-transform duration-300 hover:-translate-y-0.5 hover:shadow-lift"
           >
-            Contact Us
+            Share Your Story
           </a>
         </nav>
 
@@ -142,7 +142,7 @@ export function Navbar() {
           className={cn(
             "grid size-11 shrink-0 place-items-center rounded-full border transition-colors duration-500 lg:hidden",
             isTransparent
-              ? "border-primary-foreground/40 text-primary-foreground hover:bg-primary-foreground/20"
+              ? "border-primary/40 text-primary hover:bg-primary/20"
               : "border-border text-primary hover:bg-secondary",
           )}
         >
@@ -180,7 +180,7 @@ export function Navbar() {
                     className={cn(
                       "overflow-hidden transition-[max-height,opacity] duration-300",
                       mobilePortfolioOpen
-                        ? "max-h-40 opacity-100"
+                        ? "max-h-72 opacity-100"
                         : "max-h-0 opacity-0",
                     )}
                   >
@@ -215,11 +215,11 @@ export function Navbar() {
             );
           })}
           <a
-            href="/#contact"
+            href="mailto:priscillamukokobi@gmail.com"
             onClick={() => setOpen(false)}
             className="mt-2 rounded-full bg-accent-gradient px-6 py-3 text-center text-sm font-semibold text-accent-foreground"
           >
-            Contact Us
+            Share Your Story
           </a>
         </nav>
       </div>

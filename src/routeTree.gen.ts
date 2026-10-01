@@ -12,10 +12,11 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as NewsRouteImport } from './routes/news'
+import { Route as PodcastRouteImport } from './routes/podcast'
 import { Route as ProjectsRouteImport } from './routes/projects'
 import { Route as ResourcesRouteImport } from './routes/resources'
 import { Route as StaffAccessCrgRouteImport } from './routes/staff-access-crg'
-import { Route as AuthenticatedCrgAdminRouteImport } from './routes/_authenticated/crg-admin'
+import { Route as AuthenticatedHerNamibiaAdminRouteImport } from './routes/_authenticated/HerNamibia-admin'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -29,6 +30,11 @@ const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
 const NewsRoute = NewsRouteImport.update({
   id: '/news',
   path: '/news',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PodcastRoute = PodcastRouteImport.update({
+  id: '/podcast',
+  path: '/podcast',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ProjectsRoute = ProjectsRouteImport.update({
@@ -46,70 +52,78 @@ const StaffAccessCrgRoute = StaffAccessCrgRouteImport.update({
   path: '/staff-access-crg',
   getParentRoute: () => rootRouteImport,
 } as any)
-const AuthenticatedCrgAdminRoute = AuthenticatedCrgAdminRouteImport.update({
-  id: '/crg-admin',
-  path: '/crg-admin',
-  getParentRoute: () => AuthenticatedRouteRoute,
-} as any)
+const AuthenticatedHerNamibiaAdminRoute =
+  AuthenticatedHerNamibiaAdminRouteImport.update({
+    id: '/HerNamibia-admin',
+    path: '/HerNamibia-admin',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/news': typeof NewsRoute
+  '/podcast': typeof PodcastRoute
   '/projects': typeof ProjectsRoute
   '/resources': typeof ResourcesRoute
   '/staff-access-crg': typeof StaffAccessCrgRoute
-  '/crg-admin': typeof AuthenticatedCrgAdminRoute
+  '/HerNamibia-admin': typeof AuthenticatedHerNamibiaAdminRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/news': typeof NewsRoute
+  '/podcast': typeof PodcastRoute
   '/projects': typeof ProjectsRoute
   '/resources': typeof ResourcesRoute
   '/staff-access-crg': typeof StaffAccessCrgRoute
-  '/crg-admin': typeof AuthenticatedCrgAdminRoute
+  '/HerNamibia-admin': typeof AuthenticatedHerNamibiaAdminRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/news': typeof NewsRoute
+  '/podcast': typeof PodcastRoute
   '/projects': typeof ProjectsRoute
   '/resources': typeof ResourcesRoute
   '/staff-access-crg': typeof StaffAccessCrgRoute
-  '/_authenticated/crg-admin': typeof AuthenticatedCrgAdminRoute
+  '/_authenticated/HerNamibia-admin': typeof AuthenticatedHerNamibiaAdminRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
     | '/news'
+    | '/podcast'
     | '/projects'
     | '/resources'
     | '/staff-access-crg'
-    | '/crg-admin'
+    | '/HerNamibia-admin'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/news'
+    | '/podcast'
     | '/projects'
     | '/resources'
     | '/staff-access-crg'
-    | '/crg-admin'
+    | '/HerNamibia-admin'
   id:
     | '__root__'
     | '/'
     | '/_authenticated'
     | '/news'
+    | '/podcast'
     | '/projects'
     | '/resources'
     | '/staff-access-crg'
-    | '/_authenticated/crg-admin'
+    | '/_authenticated/HerNamibia-admin'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
   NewsRoute: typeof NewsRoute
+  PodcastRoute: typeof PodcastRoute
   ProjectsRoute: typeof ProjectsRoute
   ResourcesRoute: typeof ResourcesRoute
   StaffAccessCrgRoute: typeof StaffAccessCrgRoute
@@ -138,6 +152,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof NewsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/podcast': {
+      id: '/podcast'
+      path: '/podcast'
+      fullPath: '/podcast'
+      preLoaderRoute: typeof PodcastRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/projects': {
       id: '/projects'
       path: '/projects'
@@ -159,22 +180,22 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof StaffAccessCrgRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/_authenticated/crg-admin': {
-      id: '/_authenticated/crg-admin'
-      path: '/crg-admin'
-      fullPath: '/crg-admin'
-      preLoaderRoute: typeof AuthenticatedCrgAdminRouteImport
+    '/_authenticated/HerNamibia-admin': {
+      id: '/_authenticated/HerNamibia-admin'
+      path: '/HerNamibia-admin'
+      fullPath: '/HerNamibia-admin'
+      preLoaderRoute: typeof AuthenticatedHerNamibiaAdminRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
   }
 }
 
 interface AuthenticatedRouteRouteChildren {
-  AuthenticatedCrgAdminRoute: typeof AuthenticatedCrgAdminRoute
+  AuthenticatedHerNamibiaAdminRoute: typeof AuthenticatedHerNamibiaAdminRoute
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
-  AuthenticatedCrgAdminRoute: AuthenticatedCrgAdminRoute,
+  AuthenticatedHerNamibiaAdminRoute: AuthenticatedHerNamibiaAdminRoute,
 }
 
 const AuthenticatedRouteRouteWithChildren =
@@ -184,6 +205,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
   NewsRoute: NewsRoute,
+  PodcastRoute: PodcastRoute,
   ProjectsRoute: ProjectsRoute,
   ResourcesRoute: ResourcesRoute,
   StaffAccessCrgRoute: StaffAccessCrgRoute,

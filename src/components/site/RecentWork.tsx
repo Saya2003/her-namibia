@@ -41,8 +41,11 @@ export function RecentWork() {
     <section id="work" className="bg-surface py-20 lg:py-28">
       <div className="mx-auto max-w-7xl px-5 lg:px-8">
         <Reveal className="mx-auto max-w-2xl text-center">
-          <span className="text-xs font-bold tracking-[0.2em] text-accent">RECENT WORK</span>
-          <h2 className="mt-2 text-3xl font-bold sm:text-4xl">Project Updates</h2>
+          <span className="text-xs font-bold tracking-[0.2em] text-accent">FROM THE DESK</span>
+          <h2 className="mt-2 text-3xl font-bold sm:text-4xl">Articles</h2>
+          <p className="mt-4 text-muted-foreground">
+            Reported stories and features on the women shaping Namibia.
+          </p>
         </Reveal>
 
         {isLoading ? (
@@ -54,7 +57,7 @@ export function RecentWork() {
         ) : latestThreeItems.length === 0 ? (
           <Reveal className="mt-12 rounded-xl border-2 border-dashed border-primary bg-card p-12 text-center">
             <p className="text-muted-foreground">
-              New project updates will be published here soon.
+              New articles will be published here soon.
             </p>
           </Reveal>
         ) : (
@@ -73,7 +76,7 @@ export function RecentWork() {
                 href="/projects"
                 className="inline-flex items-center gap-2 rounded-full bg-accent-gradient px-8 py-3.5 text-sm font-semibold text-accent-foreground shadow-card transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lift"
               >
-                View all projects ({allItems.length})
+                View all articles ({allItems.length})
                 <ArrowRight className="size-4" />
               </a>
             </div>

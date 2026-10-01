@@ -8,10 +8,10 @@ import { Footer } from "@/components/site/Footer";
 import { Reveal } from "@/components/site/Reveal";
 import { Badge } from "@/components/ui/badge";
 import { ImageLightbox } from "@/components/site/ImageLightbox";
-import { KEY_SECTORS, NEWS_CATEGORIES } from "@/lib/sectors";
+import { KEY_SECTORS } from "@/lib/sectors";
 
-const TITLE = "News & Updates | CRG Research & Consulting";
-const DESCRIPTION = "Browse announcements, fieldwork insights, events, and strategic updates from CRG Research & Consulting.";
+const TITLE = "News & Stories | Her Namibia";
+const DESCRIPTION = "Stay updated with the latest conversations, features, and inspiring stories from women across Namibia.";
 
 export const Route = createFileRoute("/news")({
   head: () => ({
@@ -46,16 +46,17 @@ async function fetchAllPublishedNews(): Promise<NewsArticle[]> {
     .order("news_date", { ascending: false });
 
   if (error) throw error;
-  return (data ?? []).map((row) => ({
-    ...row,
-    image_urls: Array.isArray(row.image_urls) ? (row.image_urls as string[]) : [],
-  })) as NewsArticle[];
+  return (data ?? [])
+    .map((row) => ({
+      ...row,
+      image_urls: Array.isArray(row.image_urls) ? (row.image_urls as string[]) : [],
+    }))
+    .filter((row) => row.category !== "Podcast") as NewsArticle[];
 }
 
 function NewsPage() {
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedSector, setSelectedSector] = useState<string>("ALL");
-  const [selectedCategory, setSelectedCategory] = useState<string>("ALL");
 
   const { data = [], isLoading } = useQuery({
     queryKey: ["news", "all_published"],
@@ -71,11 +72,6 @@ function NewsPage() {
         if (itemSector !== targetSector) return false;
       }
 
-      // Category filter
-      if (selectedCategory !== "ALL") {
-        if ((item.category ?? "").trim().toLowerCase() !== selectedCategory.trim().toLowerCase()) return false;
-      }
-
       // Search term filter
       if (searchTerm.trim() !== "") {
         const term = searchTerm.toLowerCase().trim();
@@ -89,15 +85,14 @@ function NewsPage() {
 
       return true;
     });
-  }, [data, selectedSector, selectedCategory, searchTerm]);
+  }, [data, selectedSector, searchTerm]);
 
   const clearFilters = () => {
     setSearchTerm("");
     setSelectedSector("ALL");
-    setSelectedCategory("ALL");
   };
 
-  const isFiltered = searchTerm !== "" || selectedSector !== "ALL" || selectedCategory !== "ALL";
+  const isFiltered = searchTerm !== "" || selectedSector !== "ALL";
 
   return (
     <div className="min-h-screen bg-background flex flex-col">
@@ -109,8 +104,12 @@ function NewsPage() {
           <div className="mx-auto max-w-7xl px-5 text-center lg:px-8">
             <Reveal className="mx-auto max-w-3xl">
               <h1 className="text-3xl font-extrabold text-primary-foreground sm:text-4xl lg:text-5xl">
-                News & Updates
+                News & Stories
               </h1>
+              <p className="mt-4 text-lg text-primary-foreground/90">
+                Stay updated with the latest conversations, features, and inspiring stories 
+                from women across Namibia.
+              </p>
             </Reveal>
           </div>
         </section>
@@ -124,7 +123,7 @@ function NewsPage() {
                 <Search className="absolute left-3.5 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
                 <input
                   type="text"
-                  placeholder="Search news by keyword, title, or topic..."
+                  placeholder="Search stories by keyword, title, or topic..."
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
                   className="w-full rounded-full border border-input bg-card py-2.5 pl-10 pr-10 text-sm text-foreground placeholder:text-muted-foreground focus:border-accent focus:outline-none focus:ring-2 focus:ring-accent/20 transition-all shadow-sm"
@@ -143,7 +142,7 @@ function NewsPage() {
               <div className="flex items-center gap-3">
                 <span className="flex items-center gap-1.5 text-xs font-semibold text-muted-foreground">
                   <Newspaper className="size-4 text-accent" />
-                  {filteredNews.length} {filteredNews.length === 1 ? "Article" : "Articles"} Found
+                  {filteredNews.length} {filteredNews.length === 1 ? "Story" : "Stories"} Found
                 </span>
                 {isFiltered && (
                   <button
@@ -161,7 +160,7 @@ function NewsPage() {
               <div className="flex items-center gap-2 mb-3">
                 <Filter className="size-3.5 text-accent" />
                 <span className="text-xs font-bold uppercase tracking-wider text-muted-foreground">
-                  Filter by Sector:
+                  Filter by Category:
                 </span>
               </div>
               <div className="flex flex-wrap gap-2">
@@ -174,7 +173,7 @@ function NewsPage() {
                       : "border border-border bg-card text-muted-foreground hover:border-accent hover:text-foreground"
                   }`}
                 >
-                  All Sectors
+                  All Categories
                 </button>
                 {KEY_SECTORS.map((sec) => (
                   <button
@@ -193,41 +192,6 @@ function NewsPage() {
               </div>
             </div>
 
-            {/* Category Filter Chips */}
-            <div className="mt-4">
-              <div className="flex items-center gap-2 mb-2">
-                <span className="text-xs font-bold uppercase tracking-wider text-muted-foreground">
-                  Filter by Category:
-                </span>
-              </div>
-              <div className="flex flex-wrap gap-2">
-                <button
-                  type="button"
-                  onClick={() => setSelectedCategory("ALL")}
-                  className={`rounded-full px-3.5 py-1 text-xs font-medium transition-all duration-300 ${
-                    selectedCategory === "ALL"
-                      ? "bg-primary text-primary-foreground shadow-sm"
-                      : "border border-border bg-card text-muted-foreground hover:text-foreground"
-                  }`}
-                >
-                  All Categories
-                </button>
-                {NEWS_CATEGORIES.map((cat) => (
-                  <button
-                    key={cat}
-                    type="button"
-                    onClick={() => setSelectedCategory(cat)}
-                    className={`rounded-full px-3.5 py-1 text-xs font-medium transition-all duration-300 ${
-                      selectedCategory === cat
-                        ? "bg-primary text-primary-foreground shadow-sm"
-                        : "border border-border bg-card text-muted-foreground hover:text-foreground"
-                    }`}
-                  >
-                    {cat}
-                  </button>
-                ))}
-              </div>
-            </div>
           </div>
         </section>
 
@@ -243,11 +207,11 @@ function NewsPage() {
             ) : filteredNews.length === 0 ? (
               <div className="rounded-2xl border-2 border-dashed border-border bg-card p-12 text-center">
                 <Newspaper className="mx-auto size-12 text-muted-foreground/40 mb-3" />
-                <h3 className="text-lg font-bold text-foreground">No news articles found</h3>
+                <h3 className="text-lg font-bold text-foreground">No stories found</h3>
                 <p className="mt-1 text-sm text-muted-foreground">
                   {isFiltered
-                    ? "Try adjusting your search keywords, sector, or category filters."
-                    : "No published news articles are available at the moment."}
+                    ? "Try adjusting your search keywords or category filters."
+                    : "No published stories are available at the moment."}
                 </p>
                 {isFiltered && (
                   <button

@@ -1,32 +1,33 @@
 import type React from "react";
 
-export const SITE_NAME = "CRG Research & Consulting";
-export const CANONICAL_DOMAIN = "https://www.crg-research.com";
+export const SITE_NAME = "Her Namibia";
+export const CANONICAL_DOMAIN = "https://www.hernamibia.com";
 
-export const DEFAULT_TITLE = `CRG Research & Consulting | Strategic Research & Advisory – Windhoek, Namibia`;
+export const DEFAULT_TITLE = `Her Namibia | Celebrating Women's Stories & Voices – Windhoek, Namibia`;
 export const DEFAULT_DESCRIPTION =
-  "CRG Research & Consulting is a leading African research and strategic consulting firm headquartered in Windhoek, Namibia. We deliver evidence-based advisory across land, energy, mining, health and international development.";
+  "Her Namibia is a platform celebrating women in Namibia through meaningful conversations and inspiring stories. Discover journeys of leadership, motherhood, business, health, and personal growth across all walks of life.";
 export const HOME_DESCRIPTION =
-  "CRG Research & Consulting (CRG) delivers evidence-based research and strategic advisory across land & natural resources, energy, oil & gas, mining, health, defence, tourism and international development in Namibia, Kenya and Nigeria. Contact us at www.crg-research.com.";
+  "Her Namibia celebrates women's voices through honest conversations highlighting journeys, challenges, achievements, and lessons to inspire positive change. Founded by Pricilla Mukokobi, we share stories from business, leadership, motherhood, health, culture, and young women making a difference in Namibia.";
 
 export const KEYWORDS =
-  "CRG Research and Consulting, CRG Research & Consulting, CRG Consulting, CRG Research, crg-research.com, research consultancy Namibia, strategic consulting Windhoek Namibia, land and natural resources consulting Africa, international development consulting Namibia, policy research Namibia, evidence-based research Africa, strategic advisory Africa, research consulting Windhoek, development consulting sub-Saharan Africa, CRG advisory, CRG Namibia, oil and gas consulting Namibia, mining consulting Namibia, health consulting Africa, feasibility studies Namibia, monitoring evaluation learning Africa, MEL consulting, capacity building Africa, geospatial intelligence Africa, GIS consulting Namibia, fieldwork research Africa, community consultations Africa, baseline assessment Africa, socio-economic impact assessment, governance advisory Africa, institutional reform Africa, CRG Research Consulting Namibia";
+  "Her Namibia, women Namibia, Pricilla Mukokobi, women's stories Namibia, women leadership Namibia, motherhood Namibia, women in business Namibia, women empowerment Namibia, Namibian women podcast, women's voices Africa, female entrepreneurs Namibia, women's health Namibia, women culture Namibia, inspiring women stories, women success stories Namibia, Windhoek women, African women platform, women conversations Namibia, female leadership Africa, women achievements Namibia, women's experiences Namibia, celebrating women Namibia, women role models Namibia, female professionals Namibia";
 
-export const OG_IMAGE = "/images/image-8.jpeg";
-export const OG_IMAGE_ALT = "CRG Research & Consulting – Advisory & Fieldwork in Africa";
+export const OG_IMAGE = "/images/priscilla-1.jpeg";
+export const OG_IMAGE_ALT = "Her Namibia – Celebrating Women's Stories and Voices in Namibia";
 const OG_IMAGE_WIDTH = 1200;
 const OG_IMAGE_HEIGHT = 630;
 
 export const SITE_CONTACT = {
-  telephone: "+264 81 3288657",
-  streetAddress: "6 Luther Street, The Village, Eros",
+  telephone: "+264 81 361 8370",
+  email: "priscillamukokobi@gmail.com",
+  streetAddress: "Windhoek, Namibia",
   addressLocality: "Windhoek",
   addressRegion: "Khomas",
   addressCountry: "NA",
   geo: { latitude: -22.5609, longitude: 17.0898 },
 };
 
-export const SOCIAL_LINKEDIN = "https://www.linkedin.com/company/crg-research-consulting/";
+export const SOCIAL_LINKEDIN = "https://www.linkedin.com/in/priscilla-mukokobi/";
 
 /**
  * Returns the canonical site URL.

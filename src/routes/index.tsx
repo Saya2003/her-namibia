@@ -1,37 +1,12 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useState, type FormEvent } from "react";
-import emailjs from "@emailjs/browser";
-import {
-  BarChart3,
-  Bolt,
-  Briefcase,
-  Building2,
-  Compass,
-  Earth,
-  Fuel,
-  Gem,
-  Globe,
-  GraduationCap,
-  HandshakeIcon,
-  HeartPulse,
-  Lightbulb,
-  Mail,
-  MapPin,
-  Microscope,
-  Phone,
-  Plane,
-  ShieldHalf,
-  TreePine,
-} from "lucide-react";
-import { toast } from "sonner";
 import { Navbar } from "@/components/site/Navbar";
-import { HeroSlideshow } from "@/components/site/HeroSlideshow";
+
 import { RecentWork } from "@/components/site/RecentWork";
+import { RecentPodcasts } from "@/components/site/RecentPodcasts";
 import { RecentResources } from "@/components/site/RecentResources";
 import { RecentNews } from "@/components/site/RecentNews";
 import { Footer } from "@/components/site/Footer";
 import { Reveal } from "@/components/site/Reveal";
-import LocationsMap from "@/components/site/LocationsMap";
 import {
   SITE_NAME,
   DEFAULT_TITLE,
@@ -55,13 +30,13 @@ export const Route = createFileRoute("/")({
     });
     const url = siteUrl();
 
-    // ── 1. WebSite schema (enables Google Sitelinks Search Box)
+    // ── 1. WebSite schema
     const websiteJsonLd = {
       "@context": "https://schema.org",
       "@type": "WebSite",
       "@id": `${url}#website`,
       name: SITE_NAME,
-      alternateName: ["CRG Research & Consulting", "CRG Consulting", "CRG Research"],
+      alternateName: ["Her Namibia", "Her Namibia Platform", "Pricilla Mukokobi"],
       url: url,
       description: HOME_DESCRIPTION,
       inLanguage: "en",
@@ -79,25 +54,26 @@ export const Route = createFileRoute("/")({
       "@type": "Organization",
       "@id": `${url}#organization`,
       name: SITE_NAME,
-      alternateName: ["CRG Research & Consulting", "CRG Consulting", "CRG Research Namibia"],
-      legalName: "CRG Research & Consulting",
+      alternateName: ["Her Namibia", "Her Namibia Platform"],
+      founder: {
+        "@type": "Person",
+        name: "Pricilla Mukokobi",
+        jobTitle: "Founder & Host",
+      },
       url: url,
       logo: {
         "@type": "ImageObject",
-        url: absolutize("/crg-logo.png"),
-        width: "200",
-        height: "60",
+        url: absolutize("/her-namibia-logo.png"),
+        width: "400",
+        height: "400",
       },
       image: absolutize(OG_IMAGE),
       description: HOME_DESCRIPTION,
-      foundingDate: "2021",
-      numberOfEmployees: { "@type": "QuantitativeValue", minValue: 11, maxValue: 50 },
+      foundingDate: "2024",
       address: {
         "@type": "PostalAddress",
-        streetAddress: SITE_CONTACT.streetAddress,
         addressLocality: SITE_CONTACT.addressLocality,
         addressRegion: SITE_CONTACT.addressRegion,
-        postalCode: "10001",
         addressCountry: SITE_CONTACT.addressCountry,
       },
       geo: {
@@ -109,82 +85,29 @@ export const Route = createFileRoute("/")({
         {
           "@type": "ContactPoint",
           telephone: SITE_CONTACT.telephone,
+          email: SITE_CONTACT.email,
           contactType: "customer service",
-          areaServed: ["NA", "KE", "NG"],
-          availableLanguage: ["English"],
-        },
-        {
-          "@type": "ContactPoint",
-          telephone: SITE_CONTACT.telephone,
-          contactType: "sales",
-          areaServed: ["NA", "KE", "NG"],
+          areaServed: ["NA"],
           availableLanguage: ["English"],
         },
       ],
       sameAs: [SOCIAL_LINKEDIN, url],
       areaServed: [
         { "@type": "Country", name: "Namibia" },
-        { "@type": "Country", name: "Kenya" },
-        { "@type": "Country", name: "Nigeria" },
-      ],
-    };
-
-    // ── 3. LocalBusiness / ProfessionalService schema
-    const serviceJsonLd = {
-      "@context": "https://schema.org",
-      "@type": ["LocalBusiness", "ProfessionalService"],
-      "@id": `${url}#localbusiness`,
-      name: SITE_NAME,
-      alternateName: "CRG Consulting",
-      description: HOME_DESCRIPTION,
-      url: url,
-      image: absolutize(OG_IMAGE),
-      telephone: SITE_CONTACT.telephone,
-      priceRange: "$$",
-      currenciesAccepted: "NAD, USD",
-      openingHoursSpecification: [
-        {
-          "@type": "OpeningHoursSpecification",
-          dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
-          opens: "08:00",
-          closes: "17:00",
-        },
-      ],
-      areaServed: [
-        { "@type": "Country", name: "Namibia" },
-        { "@type": "Country", name: "Kenya" },
-        { "@type": "Country", name: "Nigeria" },
       ],
       knowsAbout: [
-        "Research Consulting",
-        "Policy Research",
-        "Land and Natural Resources",
-        "International Development",
-        "Oil and Gas Consulting",
-        "Mining Consulting",
-        "Health Consulting",
-        "Feasibility Studies",
-        "MEL Consulting",
-        "Geospatial Intelligence",
-        "Strategic Advisory",
+        "Women's Stories",
+        "Leadership Development",
+        "Motherhood",
+        "Business Development",
+        "Health and Wellness",
+        "Cultural Preservation",
+        "Women Empowerment",
+        "Podcast Production",
       ],
-      foundingDate: "2021",
-      address: {
-        "@type": "PostalAddress",
-        streetAddress: SITE_CONTACT.streetAddress,
-        addressLocality: SITE_CONTACT.addressLocality,
-        addressRegion: SITE_CONTACT.addressRegion,
-        addressCountry: SITE_CONTACT.addressCountry,
-      },
-      geo: {
-        "@type": "GeoCoordinates",
-        latitude: SITE_CONTACT.geo.latitude,
-        longitude: SITE_CONTACT.geo.longitude,
-      },
-      sameAs: [SOCIAL_LINKEDIN, url],
     };
 
-    // ── 4. BreadcrumbList schema
+    // ── 3. BreadcrumbList schema
     const breadcrumbJsonLd = {
       "@context": "https://schema.org",
       "@type": "BreadcrumbList",
@@ -205,9 +128,9 @@ export const Route = createFileRoute("/")({
         { name: "geo.placename", content: "Windhoek, Namibia" },
         { name: "geo.position", content: "-22.5609;17.0898" },
         { name: "ICBM", content: "-22.5609,17.0898" },
-        { name: "classification", content: "Research & Consulting" },
-        { name: "category", content: "Research Consulting, Strategic Advisory, Africa" },
-        { name: "coverage", content: "Worldwide" },
+        { name: "classification", content: "Women's Platform & Podcast" },
+        { name: "category", content: "Women Stories, Empowerment, Podcast, Namibia" },
+        { name: "coverage", content: "Namibia" },
         { name: "target", content: "all" },
         { name: "HandheldFriendly", content: "True" },
         { name: "MobileOptimized", content: "320" },
@@ -216,7 +139,7 @@ export const Route = createFileRoute("/")({
       scripts: [
         {
           type: "application/ld+json",
-          children: JSON.stringify([websiteJsonLd, orgJsonLd, serviceJsonLd, breadcrumbJsonLd]),
+          children: JSON.stringify([websiteJsonLd, orgJsonLd, breadcrumbJsonLd]),
         },
       ],
     };
@@ -224,237 +147,242 @@ export const Route = createFileRoute("/")({
   component: Index,
 });
 
-
-const STATS = [
-  { value: "2021", label: "Founded as a Research Group" },
-  { value: "2025", label: "Evolved into a Global Consultancy" },
-  { value: "3", label: "Namibia, Kenya and Nigeria" },
-  { value: "11-50", label: "Expert Consultants & Researchers" },
-];
-
-const SERVICES = [
+const FEATURED_STORIES = [
   {
-    icon: BarChart3,
-    title: "Research, Market Intelligence & Data Analytics",
-    description:
-      "We deliver cross-sector research, intelligence, forecasting, modelling and data insights across agriculture, energy, finance, health, technology, land and other industries.",
+    title: "Business",
+    description: "Entrepreneurial journeys and business leadership stories",
+    image: "/images/stories/business.jpg",
   },
   {
-    icon: Compass,
-    title: "Strategy, Policy & Business Transformation",
-    description:
-      "We advise governments, NGOs and businesses on policy, regulation, trade and compliance, as well as organizational design, growth, efficiency and transformation.",
+    title: "Leadership",
+    description: "Women leading change in their communities and industries",
+    image: "/images/stories/leadership.jpg",
   },
   {
-    icon: ShieldHalf,
-    title: "Sustainability, ESG & Risk Advisory",
-    description:
-      "We deliver impact assessments, climate-risk analysis, governance frameworks, and resilience planning for geopolitical, financial and operational risks across local and cross-border stakeholders.",
+    title: "Health",
+    description: "Healthcare professionals and wellness advocates",
+    image: "/images/stories/health.jpg",
   },
   {
-    icon: Earth,
-    title: "International Development, Monitoring & Stakeholder Solutions",
-    description:
-      "We design programmes, monitor and evaluate impact, facilitate inclusive dialogue, conduct social-impact studies and build grassroots partnerships for governments and international organizations.",
+    title: "Motherhood",
+    description: "Balancing family life with professional achievements",
+    image: "/images/stories/motherhood.jpg",
   },
   {
-    icon: GraduationCap,
-    title: "Training, Capacity Building & Innovation Advisory",
-    description:
-      "We build institutional and professional capacity through tailored training, technical assistance, knowledge transfer, digital transformation, emerging technologies (including AI and fintech) and R&D support.",
+    title: "Culture",
+    description: "Preserving and celebrating Namibian heritage",
+    image: "/images/stories/culture.jpg",
+  },
+  {
+    title: "Young Women",
+    description: "Rising stars making their mark early",
+    image: "/images/stories/young-women.jpg",
   },
 ];
 
-const PILLARS = [
-  {
-    icon: Microscope,
-    title: "Rigorous Analysis",
-    text: "High-quality research methods tailored to complex sector demands.",
-  },
-  {
-    icon: Lightbulb,
-    title: "Strategic Insights",
-    text: "Translating field data into actionable governance and market policies.",
-  },
-  {
-    icon: HandshakeIcon,
-    title: "Ethical Commitment",
-    text: "Promoting sustainable development and institutional transparency.",
-  },
-];
-
-const SECTORS = [
-  { icon: TreePine, title: "Land & Natural Resources" },
-  { icon: Fuel, title: "Oil & Gas" },
-  { icon: Plane, title: "Tourism & Hospitality" },
-  { icon: Bolt, title: "Energy" },
-  { icon: HeartPulse, title: "Health" },
-  { icon: Gem, title: "Mining" },
-  { icon: ShieldHalf, title: "Defence" },
-  { icon: Earth, title: "International Development" },
-];
-
-const HUBS = [
-  {
-    title: "Namibia",
-    email: "Namibia@crg-research.com",
-  },
-  {
-    title: "Kenya",
-    email: "Kenya@crg-research.com",
-    company: "CRG Research & Consulting Ltd",
-    phone: "+254723558432",
-    location: "Nairobi, Kenya",
-    industry: "Research, public-private sector and international development consulting",
-  },
-  {
-    title: "Nigeria",
-    email: "Nigeria@crg-research.com",
-    company: "Crowd-Data & Resources Ltd",
-    phone: "+2348035528470",
-    location: "Port Harcourt, Nigeria",
-    industry: "Research, natural resource management & advisory consultancy services",
-  },
-];
-
-const SECTOR_OPTIONS = SECTORS.map((s) => s.title);
-
-const MAP_QUERY = "6 Luther Street";
+const WOMAN_OF_MONTH = {
+  name: "Pricilla Mukokobi",
+  title: "Founder & Host of Her Namibia",
+  image: "/images/priscilla-1.jpeg",
+  story: "Pricilla Mukokobi is the visionary behind Her Namibia, a platform celebrating women's voices and experiences across Namibia. Through meaningful conversations and storytelling, she highlights the journeys, challenges, and achievements of women from all walks of life, inspiring positive change and connecting women across different backgrounds.",
+  achievements: [
+    "Platform Founder",
+    "Podcast Host",
+    "Women's Advocate",
+    "Community Builder",
+  ],
+};
 
 function Index() {
-  const [submitting, setSubmitting] = useState(false);
-  const [activeHub, setActiveHub] = useState<string | null>(null);
-
-  const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    const form = e.currentTarget;
-    const data = new FormData(form);
-    const name = String(data.get("name") ?? "").trim();
-    const email = String(data.get("email") ?? "").trim();
-    const sector = String(data.get("sector") ?? "");
-    const message = String(data.get("message") ?? "").trim();
-
-    if (!name || name.length > 100) {
-      toast.error("Please enter a valid name.");
-      return;
-    }
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) || email.length > 255) {
-      toast.error("Please enter a valid email address.");
-      return;
-    }
-
-    const SERVICE_ID = (import.meta.env["VITE_EMAILJS_SERVICE_ID"] as string) || "service_xy02h98";
-    const TEMPLATE_ID = (import.meta.env["VITE_EMAILJS_TEMPLATE_ID"] as string) || "template_556y6kc";
-    const PUBLIC_KEY = (import.meta.env["VITE_EMAILJS_PUBLIC_KEY"] as string) || "KDbRoxF7KPYV8fNU8";
-
-    setSubmitting(true);
-    try {
-      if (PUBLIC_KEY) {
-        await emailjs.send(
-          SERVICE_ID,
-          TEMPLATE_ID,
-          {
-            name: name,
-            from_name: name,
-            email: email,
-            from_email: email,
-            sector: sector,
-            message: message,
-            reply_to: email,
-            to_domain: "crg-research.com",
-            submitted_at: new Date().toLocaleString("en-GB"),
-          },
-          PUBLIC_KEY
-        );
-      }
-      form.reset();
-      toast.success(`Thank you, ${name}!`, {
-        description: `Your ${sector} inquiry has been received. Our team will contact you at ${email}.`,
-      });
-    } catch (err) {
-      console.error("EmailJS submission error:", err);
-      toast.error("Could not send your inquiry. Please try again or email us directly.");
-    } finally {
-      setSubmitting(false);
-    }
-  };
-
   return (
     <div className="min-h-screen bg-background">
       <Navbar />
       <main>
-        <HeroSlideshow />
+        {/* Hero Section */}
+        <section className="relative min-h-screen hero-gradient overflow-hidden">
+          <div className="mx-auto max-w-7xl px-5 lg:px-8">
+            <div className="grid min-h-screen grid-cols-1 items-center gap-8 py-20 lg:grid-cols-2 lg:gap-12">
+              {/* Left Content */}
+              <div className="flex flex-col justify-center">
+                <p className="animate-fade-up flex items-center gap-4 text-xs font-bold tracking-[0.28em] text-accent uppercase">
+                  <span className="h-px w-12 bg-accent" aria-hidden />
+                  Her Story · Her Voice · Her Impact
+                </p>
 
-        {/* Stats */}
-        <section className="bg-primary py-10">
-          <div className="mx-auto grid max-w-7xl grid-cols-2 gap-8 px-5 lg:grid-cols-4 lg:px-8">
-            {STATS.map((stat, i) => (
-              <Reveal key={stat.label} delay={i * 100} className="text-center">
-                <p className="text-3xl font-extrabold text-accent lg:text-4xl">{stat.value}</p>
-                <p className="mt-1 text-xs text-primary-foreground/80 sm:text-sm">{stat.label}</p>
-              </Reveal>
-            ))}
-          </div>
-        </section>
+                <h1 className="animate-fade-up mt-6 text-4xl font-bold leading-[1.05] text-primary lg:text-6xl" style={{ animationDelay: "0.12s" }}>
+                  <span className="block whitespace-nowrap text-[clamp(1.7rem,8vw,3.75rem)]">Every woman has</span>
+                  <span className="mt-2 block text-accent italic font-light">a story worth hearing.</span>
+                </h1>
 
-        {/* About */}
-        <section id="about" className="py-20 lg:py-28">
-          <div className="mx-auto grid max-w-7xl gap-12 px-5 lg:grid-cols-2 lg:items-center lg:px-8">
-            <Reveal>
-              <span className="text-xs font-bold tracking-[0.2em] text-accent">WHO WE ARE</span>
-              <h2 className="mt-2 text-3xl font-bold sm:text-4xl">
-                Your Partner for Evidence-Based Strategy
-              </h2>
-              <p className="mt-5 text-muted-foreground">
-                Formed as a research group in 2021, CRG evolved into a global consultancy in 2025.
-                We work closely with international development partners and government agencies to
-                deliver rigorous analysis, strategic insights, and practical solutions.
-              </p>
-              <p className="mt-4 text-muted-foreground">
-                Our commitment to innovation, rigorous analysis, and ethical practice enables our
-                clients to address complex challenges and support informed decision-making.
-              </p>
-            </Reveal>
+                <p
+                  className="animate-fade-up mt-8 max-w-lg border-l-2 border-accent pl-5 text-lg leading-relaxed text-muted-foreground"
+                  style={{ animationDelay: "0.24s" }}
+                >
+                  Her Namibia is a premium podcast and storytelling platform celebrating the voices, journeys and impact of Namibian women.
+                </p>
 
-            <div className="grid gap-4">
-              {PILLARS.map((pillar, i) => (
-                <Reveal key={pillar.title} delay={120 + i * 120}>
-                  <div className="hover-lift flex gap-4 rounded-xl border-2 border-primary bg-card p-6 shadow-card">
-                    <span className="grid size-12 shrink-0 place-items-center rounded-lg bg-accent-gradient text-accent-foreground">
-                      <pillar.icon className="size-6" />
-                    </span>
-                    <div className="min-w-0">
-                      <h3 className="text-base font-bold">{pillar.title}</h3>
-                      <p className="mt-1 text-sm text-muted-foreground">{pillar.text}</p>
+                <ul className="animate-fade-up mt-8 flex flex-wrap gap-3" style={{ animationDelay: "0.36s" }}>
+                  {[
+                    { label: "Real stories", tone: "story-pill-gold" },
+                    { label: "Honest conversations", tone: "story-pill-green" },
+                    { label: "Timeless inspiration", tone: "story-pill-coral" },
+                  ].map((item) => (
+                    <li
+                      key={item.label}
+                      className={`story-pill ${item.tone} rounded-full border border-accent/40 bg-background/70 px-4 py-2 text-xs font-semibold tracking-wide text-primary shadow-card`}
+                    >
+                      {item.label}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              {/* Right Image */}
+              <div className="relative flex min-w-0 items-center justify-center px-4 py-8 lg:justify-end lg:px-8">
+                <div className="pointer-events-none absolute inset-0" aria-hidden>
+                  <div className="absolute right-[-18%] top-1/2 h-80 w-80 -translate-y-1/2 rounded-full bg-primary shadow-2xl lg:h-[36rem] lg:w-[36rem]" />
+                  <div className="absolute right-[6%] top-[14%] h-80 w-80 animate-spin-slow">
+                    <div className="absolute inset-0 rounded-full border border-accent/40" />
+                    <div className="absolute left-1/2 top-0 h-2.5 w-2.5 -translate-x-1/2 rounded-full bg-accent shadow-card" />
+                  </div>
+                  <div className="absolute right-[22%] top-[10%] h-16 w-16 rounded-full bg-accent/25 blur-[2px] animate-float" />
+                  <div
+                    className="absolute bottom-[16%] right-[4%] h-9 w-9 rounded-full border border-accent/50 animate-float"
+                    style={{ animationDelay: "1.2s" }}
+                  />
+                </div>
+
+                <div className="relative z-10 grid w-full min-w-0 max-w-sm animate-scale-in [grid-template-columns:minmax(0,1fr)]">
+                  <div className="col-start-1 row-start-1 -z-10 hidden translate-x-4 translate-y-4 rounded-[2rem] bg-accent-gradient opacity-90 sm:block" />
+
+                  <div className="relative col-start-1 row-start-1 overflow-hidden rounded-[1.75rem] shadow-lift ring-1 ring-accent/35">
+                    <img
+                      src="/images/priscilla-1.jpeg"
+                      alt="Pricilla Mukokobi - Founder of Her Namibia"
+                      className="block h-auto w-full max-w-full animate-slow-zoom object-cover"
+                    />
+                    <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-primary/25 via-transparent to-transparent" />
+                    <div className="pointer-events-none absolute inset-3 rounded-[1.35rem] border border-background/40" />
+                  </div>
+
+                  <div
+                    className="col-start-1 row-start-1 z-20 m-3 justify-self-end self-start animate-fade-up lg:-mr-6 lg:mt-16"
+                    style={{ animationDelay: "0.4s" }}
+                  >
+                    <div className="animate-float rounded-2xl border border-accent/30 bg-background/92 px-4 py-3 text-center shadow-lift backdrop-blur-md lg:px-5 lg:py-4">
+                      <span className="mx-auto mb-2 block h-0.5 w-8 rounded-full bg-accent" />
+                      <p className="text-base font-bold leading-tight text-primary lg:text-lg">
+                        Pricilla
+                        <br />
+                        Mukokobi
+                      </p>
+                      <p className="mt-1.5 whitespace-nowrap text-[0.62rem] font-semibold tracking-[0.14em] text-accent lg:tracking-[0.2em]">
+                        FOUNDER & HOST
+                      </p>
                     </div>
                   </div>
-                </Reveal>
-              ))}
+
+                  <div
+                    className="col-start-1 row-start-1 z-20 m-3 max-w-[12.75rem] justify-self-start self-end animate-fade-up lg:-ml-6 lg:mb-12 lg:max-w-[15.5rem]"
+                    style={{ animationDelay: "0.65s" }}
+                  >
+                    <div className="animate-float-delayed rounded-2xl border border-accent/25 bg-background/90 p-4 shadow-card backdrop-blur-md">
+                      <p className="text-sm italic leading-relaxed text-primary">
+                        <span className="mr-1 text-2xl leading-none text-accent not-italic">“</span>
+                        Every woman's journey is unique, but our strength is universal.
+                        <span className="ml-0.5 text-2xl leading-none text-accent not-italic">”</span>
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
+          </div>
+
+        </section>
+
+        {/* About Her Namibia — photo stays fixed while the copy scrolls over it */}
+        <section id="about" className="relative scroll-mt-24">
+          <div className="sticky top-0 z-0 h-svh overflow-hidden">
+            <img
+              src="/images/priscilla-2.jpeg"
+              alt="Pricilla Mukokobi"
+              className="absolute inset-0 h-full w-full object-cover object-[22%_center]"
+            />
+            <div className="absolute inset-0 bg-gradient-to-l from-primary/45 via-primary/10 to-transparent" />
+          </div>
+
+          <div className="relative z-10 -mt-[100svh]">
+            <div className="flex min-h-svh items-center px-5 py-28 lg:justify-end lg:px-16">
+              <div className="w-full max-w-xl rounded-3xl border border-background/40 bg-background/90 p-8 shadow-lift backdrop-blur-md sm:p-10 lg:max-w-lg xl:max-w-xl">
+                <span className="text-xs font-bold tracking-[0.2em] text-accent">ABOUT HER NAMIBIA</span>
+                <h2 className="mt-2 text-3xl font-bold text-primary sm:text-4xl">
+                  Every Woman Has a Story Worth Hearing
+                </h2>
+                <p className="mt-5 text-muted-foreground">
+                  Her Namibia is a platform that celebrates the stories of women in Namibia.
+                  We share conversations with women from different backgrounds, giving them the
+                  opportunity to tell their stories in their own words.
+                </p>
+                <p className="mt-4 text-muted-foreground">
+                  We believe every journey matters and that the experiences of women can inspire,
+                  educate and encourage others. From business and leadership to motherhood, health,
+                  education, the arts and community work, Her Namibia highlights the women making
+                  a difference every day.
+                </p>
+              </div>
+            </div>
+
+            <div className="flex px-5 lg:justify-end lg:px-16">
+            <div className="grid w-full max-w-xl gap-6 sm:grid-cols-2 lg:max-w-2xl">
+              <div className="rounded-3xl border border-background/30 bg-background/88 p-8 shadow-lift backdrop-blur-md">
+                <h3 className="text-lg font-bold text-primary">Our Vision</h3>
+                <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
+                  To become a leading platform where women's voices are heard, their stories
+                  are preserved, and their experiences inspire future generations across Africa and beyond.
+                </p>
+              </div>
+              <div className="rounded-3xl border border-background/30 bg-background/88 p-8 shadow-lift backdrop-blur-md">
+                <h3 className="text-lg font-bold text-primary">Our Mission</h3>
+                <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
+                  To share honest, meaningful conversations with women from all walks of life,
+                  highlighting their journeys, challenges, achievements, and lessons to inspire positive change.
+                </p>
+              </div>
+            </div>
+            </div>
+            <div className="h-[70svh]" aria-hidden />
           </div>
         </section>
 
-        {/* Services */}
-        <section id="services" className="scroll-mt-24 py-20 lg:py-28">
+        {/* Featured Stories */}
+        <section id="stories" className="scroll-mt-24 bg-surface py-20 lg:py-28">
           <div className="mx-auto max-w-7xl px-5 lg:px-8">
             <Reveal className="mx-auto max-w-2xl text-center">
               <span className="text-xs font-bold tracking-[0.2em] text-accent">
-                WHAT WE DO
+                FEATURED STORIES
               </span>
-              <h2 className="mt-2 text-3xl font-bold sm:text-4xl">Our Services</h2>
+              <h2 className="mt-2 text-3xl font-bold sm:text-4xl">Stories That Inspire</h2>
+              <p className="mt-4 text-muted-foreground">
+                Discover the incredible journeys of women across Namibia, each with their unique 
+                story of resilience, achievement, and inspiration.
+              </p>
             </Reveal>
 
             <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-              {SERVICES.map((service, i) => (
-                <Reveal key={service.title} delay={i * 80}>
-                  <div className="hover-lift group flex h-full flex-col justify-between rounded-xl border-2 border-primary bg-card p-7 shadow-card">
-                    <div>
-                      <span className="grid size-12 place-items-center rounded-lg bg-accent-gradient text-accent-foreground shadow-sm transition-transform duration-300 group-hover:scale-105">
-                        <service.icon className="size-6" />
-                      </span>
-                      <h3 className="mt-5 text-lg font-bold text-primary">{service.title}</h3>
-                      <p className="mt-2.5 text-sm leading-relaxed text-muted-foreground">
-                        {service.description}
+              {FEATURED_STORIES.map((story, i) => (
+                <Reveal key={story.title} delay={i * 80}>
+                  <div className="hover-lift relative flex h-full min-h-60 flex-col overflow-hidden rounded-xl border-2 border-primary shadow-card">
+                    <div
+                      className="absolute inset-0 bg-cover bg-center"
+                      style={{ backgroundImage: `url(${story.image})` }}
+                      aria-hidden
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-b from-primary/45 via-primary/30 to-primary/20" aria-hidden />
+                    <div className="relative p-7">
+                      <h3 className="text-2xl font-bold leading-tight text-primary-foreground drop-shadow-md sm:text-3xl">{story.title}</h3>
+                      <p className="mt-3 text-base leading-relaxed text-primary-foreground drop-shadow-md sm:text-lg">
+                        {story.description}
                       </p>
                     </div>
                   </div>
@@ -464,226 +392,65 @@ function Index() {
           </div>
         </section>
 
-        {/* Sectors */}
-        <section id="sectors" className="scroll-mt-24 bg-surface py-20 lg:py-28">
+        {/* Woman of the Month */}
+        <section id="woman-of-month" className="scroll-mt-24 py-20 lg:py-28">
           <div className="mx-auto max-w-7xl px-5 lg:px-8">
-            <Reveal className="mx-auto max-w-2xl text-center">
+            <Reveal className="mx-auto max-w-2xl text-center mb-12">
               <span className="text-xs font-bold tracking-[0.2em] text-accent">
-                OUR SPECIALTIES
+                WOMAN OF THE MONTH
               </span>
-              <h2 className="mt-2 text-3xl font-bold sm:text-4xl">Key Operating Sectors</h2>
+              <h2 className="mt-2 text-3xl font-bold sm:text-4xl">Featured Story</h2>
             </Reveal>
 
-            <div className="mt-12 grid grid-cols-2 gap-4 lg:grid-cols-4">
-              {SECTORS.map((sector, i) => (
-                <Reveal key={sector.title} delay={i * 70}>
-                  <div className="hover-lift group h-full rounded-xl border-2 border-primary bg-card p-6 text-center shadow-card">
-                    <span className="mx-auto grid size-14 place-items-center rounded-full bg-secondary text-primary transition-colors duration-300 group-hover:bg-accent-gradient group-hover:text-accent-foreground">
-                      <sector.icon className="size-6" />
-                    </span>
-                    <h3 className="mt-4 text-sm font-bold sm:text-base">{sector.title}</h3>
+            <div className="bg-primary rounded-2xl p-8 lg:p-12 text-primary-foreground">
+              <div className="grid gap-8 lg:grid-cols-2 lg:items-center">
+                <Reveal>
+                  <div className="relative">
+                    <img
+                      src={WOMAN_OF_MONTH.image}
+                      alt={WOMAN_OF_MONTH.name}
+                      className="h-96 w-full rounded-xl object-cover shadow-lift lg:h-auto"
+                    />
                   </div>
                 </Reveal>
-              ))}
+                
+                <Reveal delay={150}>
+                  <div>
+                    <h3 className="text-2xl font-bold text-accent lg:text-3xl">
+                      {WOMAN_OF_MONTH.name}
+                    </h3>
+                    <p className="mt-2 text-lg font-semibold opacity-90">
+                      {WOMAN_OF_MONTH.title}
+                    </p>
+                    
+                    <p className="mt-6 text-primary-foreground/90 leading-relaxed">
+                      {WOMAN_OF_MONTH.story}
+                    </p>
+                    
+                    <div className="mt-6">
+                      <h4 className="font-bold text-accent">Achievements:</h4>
+                      <div className="mt-3 flex flex-wrap gap-2">
+                        {WOMAN_OF_MONTH.achievements.map((achievement) => (
+                          <span
+                            key={achievement}
+                            className="rounded-full bg-accent/20 px-3 py-1 text-sm font-semibold text-accent"
+                          >
+                            {achievement}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                </Reveal>
+              </div>
             </div>
           </div>
         </section>
 
         <RecentWork />
-
+        <RecentPodcasts />
         <RecentResources />
-
         <RecentNews />
-
-        {/* Partners */}
-        <section id="partners" className="scroll-mt-24 py-20 lg:py-28">
-          <div className="mx-auto max-w-7xl px-5 text-center lg:px-8">
-            <Reveal className="mx-auto max-w-2xl">
-              <h2 className="mt-2 text-3xl font-bold sm:text-4xl">Partners</h2>
-            </Reveal>
-
-            <div className="mt-12 grid gap-6 md:grid-cols-3">
-              {HUBS.map((hub, i) => {
-                const open = activeHub === hub.title;
-                return (
-                  <Reveal key={hub.title} delay={i * 120}>
-                    <div
-                      role="button"
-                      tabIndex={0}
-                      aria-expanded={open}
-                      onClick={() => setActiveHub(open ? null : hub.title)}
-                      onKeyDown={(e) => {
-                        if (e.key === "Enter" || e.key === " ") {
-                          e.preventDefault();
-                          setActiveHub(open ? null : hub.title);
-                        }
-                      }}
-                      className="group hover-lift h-full cursor-pointer rounded-xl border-2 border-primary bg-card p-8 text-center shadow-card"
-                    >
-                      <span className="animate-float mx-auto grid size-12 place-items-center rounded-full bg-secondary text-accent">
-                        <MapPin className="size-6" />
-                      </span>
-                      <h3 className="mt-4 text-xl font-bold">{hub.title}</h3>
-                      <p className="mt-1 text-sm font-semibold text-primary">Tap or hover for contact details</p>
-
-                      <div
-                        className={`mt-4 space-y-2 border-t border-primary/20 pt-4 text-left text-sm ${
-                          open ? "block" : "hidden group-hover:block group-focus-within:block"
-                        }`}
-                      >
-                        <a
-                          href={`mailto:${hub.email}`}
-                          className="flex items-start gap-2 text-muted-foreground transition-colors hover:text-primary"
-                        >
-                          <Mail className="mt-0.5 size-4 shrink-0 text-primary" />
-                          <span>
-                            <span className="font-bold text-primary">Email: </span>
-                            {hub.email}
-                          </span>
-                        </a>
-                        {hub.company && (
-                          <p className="flex items-start gap-2 text-muted-foreground">
-                            <Building2 className="mt-0.5 size-4 shrink-0 text-primary" />
-                            <span>
-                              <span className="font-bold text-primary">Company: </span>
-                              {hub.company}
-                            </span>
-                          </p>
-                        )}
-                        {hub.phone && (
-                          <p className="flex items-start gap-2 text-muted-foreground">
-                            <Phone className="mt-0.5 size-4 shrink-0 text-primary" />
-                            <span>
-                              <span className="font-bold text-primary">Phone: </span>
-                              {hub.phone}
-                            </span>
-                          </p>
-                        )}
-                        {hub.location && (
-                          <p className="flex items-start gap-2 text-muted-foreground">
-                            <MapPin className="mt-0.5 size-4 shrink-0 text-primary" />
-                            <span>
-                              <span className="font-bold text-primary">Location: </span>
-                              {hub.location}
-                            </span>
-                          </p>
-                        )}
-                        {hub.industry && (
-                          <p className="flex items-start gap-2 text-muted-foreground">
-                            <Globe className="mt-0.5 size-4 shrink-0 text-primary" />
-                            <span>
-                              <span className="font-bold text-primary">Industry: </span>
-                              {hub.industry}
-                            </span>
-                          </p>
-                        )}
-                      </div>
-                    </div>
-                  </Reveal>
-                );
-              })}
-            </div>
-
-            {/* Interactive Locations Map */}
-            <Reveal className="mt-14">
-              <LocationsMap />
-            </Reveal>
-          </div>
-        </section>
-
-        {/* Contact */}
-        <section id="contact" className="bg-surface py-20 lg:py-28">
-          <div className="mx-auto grid max-w-7xl gap-12 px-5 lg:grid-cols-2 lg:px-8">
-            <Reveal>
-              <span className="text-xs font-bold tracking-[0.2em] text-accent">GET IN TOUCH</span>
-              <h2 className="mt-2 text-3xl font-bold sm:text-4xl">Contact Our Experts</h2>
-              <p className="mt-4 text-muted-foreground">
-                Connect with our research team to discuss upcoming projects, consultations, or
-                partnerships.
-              </p>
-
-              <div className="mt-8 space-y-4">
-                {[
-                  { icon: Phone, label: "Phone", value: "+264 81 3288657" },
-                  { icon: MapPin, label: "Location", value: MAP_QUERY },
-                  {
-                    icon: Briefcase,
-                    label: "Industry",
-                    value: "Research & Strategic Consulting Services",
-                  },
-                ].map((item, i) => (
-                  <Reveal key={item.label} delay={i * 100}>
-                    <div className="flex items-start gap-4 rounded-xl border-2 border-primary bg-card p-5 shadow-card">
-                      <span className="grid size-10 shrink-0 place-items-center rounded-lg bg-secondary text-accent">
-                        <item.icon className="size-5" />
-                      </span>
-                      <div className="min-w-0">
-                        <p className="text-sm font-bold text-primary">{item.label}</p>
-                        <p className="text-sm text-muted-foreground">{item.value}</p>
-                      </div>
-                    </div>
-                  </Reveal>
-                ))}
-              </div>
-            </Reveal>
-
-            <Reveal delay={150}>
-              <form
-                onSubmit={onSubmit}
-                className="rounded-2xl border-2 border-primary bg-card p-7 shadow-lift"
-              >
-                <h3 className="text-xl font-bold">Send a Message</h3>
-                <div className="mt-6 space-y-4">
-                  <input
-                    name="name"
-                    required
-                    maxLength={100}
-                    placeholder="Your Name"
-                    className="w-full rounded-lg border border-input bg-background px-4 py-3 text-sm outline-none transition-shadow focus:ring-2 focus:ring-ring"
-                  />
-                  <input
-                    name="email"
-                    type="email"
-                    required
-                    maxLength={255}
-                    placeholder="Your Email Address"
-                    className="w-full rounded-lg border border-input bg-background px-4 py-3 text-sm outline-none transition-shadow focus:ring-2 focus:ring-ring"
-                  />
-                  <select
-                    name="sector"
-                    required
-                    defaultValue=""
-                    className="w-full rounded-lg border border-input bg-background px-4 py-3 text-sm outline-none transition-shadow focus:ring-2 focus:ring-ring"
-                  >
-                    <option value="" disabled>
-                      Select Sector Interest
-                    </option>
-                    {SECTOR_OPTIONS.map((s) => (
-                      <option key={s} value={s}>
-                        {s}
-                      </option>
-                    ))}
-                  </select>
-                  <textarea
-                    name="message"
-                    required
-                    rows={5}
-                    maxLength={1000}
-                    placeholder="Project details or inquiry..."
-                    className="w-full rounded-lg border border-input bg-background px-4 py-3 text-sm outline-none transition-shadow focus:ring-2 focus:ring-ring"
-                  />
-                  <button
-                    type="submit"
-                    disabled={submitting}
-                    className="w-full rounded-full bg-accent-gradient py-3 text-sm font-semibold text-accent-foreground shadow-card transition-transform duration-300 hover:-translate-y-0.5 disabled:opacity-60"
-                  >
-                    {submitting ? "Sending..." : "Submit Inquiry"}
-                  </button>
-                </div>
-              </form>
-            </Reveal>
-          </div>
-        </section>
       </main>
       <Footer />
     </div>
